@@ -1,10 +1,12 @@
 from __future__ import unicode_literals
 import itertools
-from six.moves.html_parser import HTMLParser
+
+import six
+from six.moves import html_parser
 from .sugarentry import SugarEntry
 from collections import deque, defaultdict
 
-HTMLP = HTMLParser()
+HTMLP = html_parser.HTMLParser()
 
 class SugarModule:
     """Defines a SugarCRM module.
@@ -75,7 +77,7 @@ class SugarModule:
                 try:
                     result['total'] = int(resp_data['total_count'], 10)
                 except TypeError as e:
-                    print resp_data
+                    print(resp_data)
             else:
                 result['total'] = 0
             if resp_data['result_count'] == 0:
@@ -88,7 +90,7 @@ class SugarModule:
                 entry = SugarEntry(self)
                 for key, obj in list(record['name_value_list'].items()):
                     val = obj['value']
-                    entry[key] = HTMLP.unescape(val) if isinstance(val, basestring) else val
+                    entry[key] = HTMLP.unescape(val) if isinstance(val, six.string_types) else val
                 entry.related_beans = defaultdict(list)
                 try:
                     linked = resp_data['relationship_list'][idx]
@@ -132,7 +134,7 @@ class SugarModule:
                 entry = SugarEntry(self)
                 for key, obj in list(record.items()):
                     val = obj['value']
-                    entry[key] = HTMLP.unescape(val) if isinstance(val, basestring) else val
+                    entry[key] = HTMLP.unescape(val) if isinstance(val, six.string_types) else val
                 results.append(entry)
         return results
 
