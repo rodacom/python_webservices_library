@@ -21,13 +21,14 @@ class Sugarcrm:
     server.
     """
 
-    def __init__(self, url, username, password, is_ldap_member = False):
+    def __init__(self, url, username, password, is_ldap_member=False):
         """Constructor for Sugarcrm connection.
 
         Keyword arguments:
         url -- string URL of the sugarcrm REST API
         username -- username to allow login upon construction
         password -- password to allow login upon construction
+        is_ldap_member -- True if password already is a MD5 hash
         """
 
         # String which holds the session id of the connection, required at
